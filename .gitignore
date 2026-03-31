@@ -1,0 +1,27 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfplan
+terraform.tfvars
+override.tf
+override.tf.json
+
+# AWS credentials (NUNCA suba isso!)
+.aws/
+*.pem
+*.key
+
+# Node / OS
+node_modules/
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Python server
+__pycache__/
+*.pyc

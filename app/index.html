@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="SRE Cloud Operations Dashboard — Projeto portfolio Marvin Costa. Demonstração de skills em AWS, Kubernetes, Terraform, Karpenter e CI/CD." />
+  <title>SRE Cloud Dashboard | Marvin Costa — Localiza&Co</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-dot"></span>
+        <span>SRE Dashboard</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#architecture">Arquitetura</a></li>
+        <li><a href="#metrics">Métricas</a></li>
+        <li><a href="#karpenter">Karpenter</a></li>
+        <li><a href="#pipeline">CI/CD</a></li>
+        <li><a href="#stack">Stack</a></li>
+      </ul>
+      <a href="https://github.com" target="_blank" class="btn-nav" id="github-link">Ver no GitHub</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="grid-lines"></div>
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>Cluster Online — AWS us-east-1</span>
+      </div>
+      <h1>Cloud Operations<br /><span class="gradient-text">SRE Dashboard</span></h1>
+      <p class="hero-sub">
+        Infraestrutura multicloud de alto desempenho com <strong>AWS EKS</strong>, <strong>Karpenter</strong>,
+        <strong>Terraform</strong> e <strong>observabilidade completa</strong>. Projeto portfolio desenvolvido
+        para a vaga de SRE/Cloud Engineer na <strong>Localiza&amp;Co</strong>.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-uptime">99.98%</span>
+          <span class="stat-label">Uptime SLA</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-pods">24</span>
+          <span class="stat-label">Pods Running</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-nodes">6</span>
+          <span class="stat-label">Nodes Ativos</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-latency">12ms</span>
+          <span class="stat-label">Latência P99</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#architecture" class="btn-primary">Ver Arquitetura</a>
+        <a href="#pipeline" class="btn-secondary">Pipeline CI/CD</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <canvas id="hero-canvas"></canvas>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="section-header">
+      <span class="section-tag">AWS Infraestrutura</span>
+      <h2>Arquitetura Cloud</h2>
+      <p>Fluxo completo de tráfego — do usuário final até os pods no EKS</p>
+    </div>
+    <div class="arch-container">
+      <div class="arch-diagram" id="arch-diagram">
+
+        <div class="arch-layer">
+          <div class="arch-node node-internet" id="node-internet">
+            <div class="node-icon">🌐</div>
+            <span>Internet</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow animated-arrow" id="arrow-1">
+          <div class="arrow-label">HTTPS</div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-node node-akamai" id="node-akamai">
+            <div class="node-icon">🛡️</div>
+            <span>Akamai CDN / WAF</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow animated-arrow" id="arrow-2">
+          <div class="arrow-label">TLS Offload</div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-node node-alb" id="node-alb">
+            <div class="node-icon">⚖️</div>
+            <span>AWS ALB</span>
+            <span class="node-detail">API Gateway</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow animated-arrow" id="arrow-3">
+          <div class="arrow-label">Kubernetes Ingress</div>
+        </div>
+
+        <div class="arch-layer arch-layer-eks">
+          <div class="arch-node node-eks" id="node-eks">
+            <div class="node-icon">☸️</div>
+            <span>AWS EKS</span>
+            <span class="node-detail">Karpenter Auto Scaling</span>
+          </div>
+          <div class="eks-pods">
+            <div class="pod" id="pod1">Pod</div>
+            <div class="pod" id="pod2">Pod</div>
+            <div class="pod" id="pod3">Pod</div>
+            <div class="pod pod-karpenter" id="pod4">+Pod</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow animated-arrow" id="arrow-4">
+          <div class="arrow-label">CloudWatch / SSM</div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-node node-obs" id="node-obs">
+            <div class="node-icon">📊</div>
+            <span>Observabilidade</span>
+            <span class="node-detail">CloudWatch · Logs · Metrics</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="arch-sidebar">
+        <h3>Componentes AWS</h3>
+        <ul class="component-list">
+          <li class="comp-item active" id="comp-vpc">
+            <span class="comp-icon">🏗️</span>
+            <div>
+              <strong>VPC + Subnets</strong>
+              <span>2 AZs, público + privado, NAT Gateway</span>
+            </div>
+          </li>
+          <li class="comp-item" id="comp-eks">
+            <span class="comp-icon">☸️</span>
+            <div>
+              <strong>EKS 1.29</strong>
+              <span>Managed node groups + Karpenter</span>
+            </div>
+          </li>
+          <li class="comp-item" id="comp-iam">
+            <span class="comp-icon">🔐</span>
+            <div>
+              <strong>IAM + IRSA</strong>
+              <span>Least privilege, OIDC provider</span>
+            </div>
+          </li>
+          <li class="comp-item" id="comp-alb">
+            <span class="comp-icon">⚖️</span>
+            <div>
+              <strong>ALB Controller</strong>
+              <span>Ingress gerenciado, SSL ACM</span>
+            </div>
+          </li>
+          <li class="comp-item" id="comp-cw">
+            <span class="comp-icon">📡</span>
+            <div>
+              <strong>CloudWatch</strong>
+              <span>Logs, Metrics, Alarms, Dashboards</span>
+            </div>
+          </li>
+          <li class="comp-item" id="comp-ssm">
+            <span class="comp-icon">🔧</span>
+            <div>
+              <strong>SSM Parameter Store</strong>
+              <span>Secrets e configurações seguras</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section id="metrics">
+    <div class="section-header">
+      <span class="section-tag">CloudWatch</span>
+      <h2>Métricas do Cluster</h2>
+      <p>Dados em tempo real dos nodes e workloads no EKS</p>
+    </div>
+    <div class="metrics-grid">
+
+      <div class="metric-card" id="mc-cpu">
+        <div class="metric-header">
+          <span class="metric-name">CPU Utilization</span>
+          <span class="metric-badge badge-ok">OK</span>
+        </div>
+        <div class="metric-value" id="cpu-val">38%</div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill" id="cpu-bar" style="width:38%"></div>
+        </div>
+        <canvas class="sparkline" id="spark-cpu"></canvas>
+      </div>
+
+      <div class="metric-card" id="mc-mem">
+        <div class="metric-header">
+          <span class="metric-name">Memory Usage</span>
+          <span class="metric-badge badge-ok">OK</span>
+        </div>
+        <div class="metric-value" id="mem-val">61%</div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill bar-warn" id="mem-bar" style="width:61%"></div>
+        </div>
+        <canvas class="sparkline" id="spark-mem"></canvas>
+      </div>
+
+      <div class="metric-card" id="mc-rps">
+        <div class="metric-header">
+          <span class="metric-name">Requests / sec</span>
+          <span class="metric-badge badge-ok">OK</span>
+        </div>
+        <div class="metric-value" id="rps-val">1.2k</div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill bar-blue" id="rps-bar" style="width:60%"></div>
+        </div>
+        <canvas class="sparkline" id="spark-rps"></canvas>
+      </div>
+
+      <div class="metric-card" id="mc-error">
+        <div class="metric-header">
+          <span class="metric-name">Error Rate</span>
+          <span class="metric-badge badge-ok">OK</span>
+        </div>
+        <div class="metric-value" id="error-val">0.02%</div>
+        <div class="metric-bar">
+          <div class="metric-bar-fill bar-green" id="error-bar" style="width:2%"></div>
+        </div>
+        <canvas class="sparkline" id="spark-error"></canvas>
+      </div>
+
+    </div>
+
+    <div class="nodes-table-wrap">
+      <h3>Node Status</h3>
+      <table class="nodes-table" id="nodes-table">
+        <thead>
+          <tr>
+            <th>Node</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>CPU</th>
+            <th>Memória</th>
+            <th>Pods</th>
+            <th>Provisionado por</th>
+          </tr>
+        </thead>
+        <tbody id="nodes-tbody">
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- KARPENTER -->
+  <section id="karpenter">
+    <div class="section-header">
+      <span class="section-tag">Auto Scaling</span>
+      <h2>Karpenter Activity</h2>
+      <p>Log de eventos de provisionamento e otimização de custo</p>
+    </div>
+    <div class="karpenter-layout">
+      <div class="karpenter-feed" id="karpenter-feed">
+        <!-- preenchido via JS -->
+      </div>
+      <div class="karpenter-stats">
+        <div class="kstat-card">
+          <div class="kstat-label">Economia Spot</div>
+          <div class="kstat-value" id="kstat-saving">67%</div>
+          <div class="kstat-sub">vs On-Demand</div>
+        </div>
+        <div class="kstat-card">
+          <div class="kstat-label">Nodes Provisionados</div>
+          <div class="kstat-value" id="kstat-nodes">14</div>
+          <div class="kstat-sub">Última hora</div>
+        </div>
+        <div class="kstat-card">
+          <div class="kstat-label">Tempo Médio</div>
+          <div class="kstat-value">8s</div>
+          <div class="kstat-sub">Para novo node</div>
+        </div>
+        <div class="kstat-card">
+          <div class="kstat-label">Interrupções Spot</div>
+          <div class="kstat-value" id="kstat-interrupts">3</div>
+          <div class="kstat-sub">Migradas sem impacto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="section-header">
+      <span class="section-tag">GitHub Actions</span>
+      <h2>CI/CD Pipeline</h2>
+      <p>Deploy automatizado do código até o cluster EKS</p>
+    </div>
+    <div class="pipeline-container">
+      <div class="pipeline-steps" id="pipeline-steps">
+        <div class="pipe-step completed" id="ps-code">
+          <div class="pipe-icon">📝</div>
+          <div class="pipe-body">
+            <div class="pipe-title">Code Push</div>
+            <div class="pipe-detail">git push origin main</div>
+            <div class="pipe-time">2s atrás</div>
+          </div>
+          <div class="pipe-status status-done">✓</div>
+        </div>
+        <div class="pipe-connector done"></div>
+        <div class="pipe-step completed" id="ps-build">
+          <div class="pipe-icon">🐳</div>
+          <div class="pipe-body">
+            <div class="pipe-title">Docker Build</div>
+            <div class="pipe-detail">docker build + push ECR</div>
+            <div class="pipe-time">45s</div>
+          </div>
+          <div class="pipe-status status-done">✓</div>
+        </div>
+        <div class="pipe-connector done"></div>
+        <div class="pipe-step completed" id="ps-tf">
+          <div class="pipe-icon">🏗️</div>
+          <div class="pipe-body">
+            <div class="pipe-title">Terraform Apply</div>
+            <div class="pipe-detail">infra atualizada</div>
+            <div class="pipe-time">1m 22s</div>
+          </div>
+          <div class="pipe-status status-done">✓</div>
+        </div>
+        <div class="pipe-connector done"></div>
+        <div class="pipe-step running" id="ps-deploy">
+          <div class="pipe-icon">☸️</div>
+          <div class="pipe-body">
+            <div class="pipe-title">kubectl rollout</div>
+            <div class="pipe-detail">deployment/localiza-app</div>
+            <div class="pipe-time running-time" id="pipe-timer">00:23</div>
+          </div>
+          <div class="pipe-status status-running">
+            <span class="spinner"></span>
+          </div>
+        </div>
+        <div class="pipe-connector"></div>
+        <div class="pipe-step pending" id="ps-verify">
+          <div class="pipe-icon">✅</div>
+          <div class="pipe-body">
+            <div class="pipe-title">Health Check</div>
+            <div class="pipe-detail">Aguardando pods Ready</div>
+            <div class="pipe-time">—</div>
+          </div>
+          <div class="pipe-status status-pending">⏳</div>
+        </div>
+      </div>
+
+      <div class="pipeline-log" id="pipeline-log">
+        <div class="log-header">
+          <span class="log-title">📋 Output do pipeline</span>
+          <span class="log-live"><span class="pulse-dot"></span> Live</span>
+        </div>
+        <div class="log-body" id="log-body">
+          <div class="log-line"><span class="log-ts">[10:42:01]</span> Workflow triggered by push to main</div>
+          <div class="log-line"><span class="log-ts">[10:42:03]</span> Checking out repository...</div>
+          <div class="log-line"><span class="log-ts">[10:42:05]</span> <span class="log-ok">✓</span> AWS credentials
+            configured</div>
+          <div class="log-line"><span class="log-ts">[10:42:08]</span> Building Docker image: localiza-app:sha-a3f92c
+          </div>
+          <div class="log-line"><span class="log-ts">[10:42:41]</span> <span class="log-ok">✓</span> Image pushed to ECR
+            successfully</div>
+          <div class="log-line"><span class="log-ts">[10:43:06]</span> Running terraform plan...</div>
+          <div class="log-line"><span class="log-ts">[10:43:48]</span> <span class="log-ok">✓</span> Plan: 0 to add, 1
+            to change, 0 to destroy</div>
+          <div class="log-line"><span class="log-ts">[10:44:10]</span> <span class="log-ok">✓</span> terraform apply
+            complete</div>
+          <div class="log-line"><span class="log-ts">[10:44:13]</span> Updating EKS deployment image...</div>
+          <div class="log-line log-active"><span class="log-ts">[10:44:35]</span> Waiting for rollout... <span
+              class="blink">█</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="section-header">
+      <span class="section-tag">Tecnologias</span>
+      <h2>Stack Completa</h2>
+    </div>
+    <div class="stack-grid" id="stack-grid">
+
+      <div class="stack-card" id="sc-aws">
+        <div class="stack-logo">☁️</div>
+        <div class="stack-name">AWS</div>
+        <div class="stack-desc">EC2, EKS, ALB, CloudWatch, IAM, SSM, ECR, API Gateway</div>
+      </div>
+
+      <div class="stack-card" id="sc-k8s">
+        <div class="stack-logo">☸️</div>
+        <div class="stack-name">Kubernetes / EKS</div>
+        <div class="stack-desc">Clusters produção, troubleshooting, admission controllers, network policies, service meshes</div>
+      </div>
+
+      <div class="stack-card" id="sc-karpenter">
+        <div class="stack-logo">⚡</div>
+        <div class="stack-name">Karpenter</div>
+        <div class="stack-desc">NodePool, NodeClass, Spot/On-Demand, otimização de custo e disponibilidade</div>
+      </div>
+
+      <div class="stack-card" id="sc-tf">
+        <div class="stack-logo">🏗️</div>
+        <div class="stack-name">Terraform</div>
+        <div class="stack-desc">Módulos reutilizáveis, state remoto S3, pipelines CI/CD, GitOps</div>
+      </div>
+
+      <div class="stack-card" id="sc-linux">
+        <div class="stack-logo">🐧</div>
+        <div class="stack-name">Linux</div>
+        <div class="stack-desc">Red Hat, Ubuntu — automação, hardening, troubleshooting kernel/processos</div>
+      </div>
+
+      <div class="stack-card" id="sc-akamai">
+        <div class="stack-logo">🛡️</div>
+        <div class="stack-name">Akamai</div>
+        <div class="stack-desc">CDN, cache rules, WAF, análise de performance e segurança web global</div>
+      </div>
+
+      <div class="stack-card" id="sc-f5">
+        <div class="stack-logo">🔀</div>
+        <div class="stack-name">F5</div>
+        <div class="stack-desc">iRules, SSL offloading, políticas de tráfego, balanceamento crítico</div>
+      </div>
+
+      <div class="stack-card" id="sc-cicd">
+        <div class="stack-logo">🔁</div>
+        <div class="stack-name">CI/CD / GitOps</div>
+        <div class="stack-desc">GitHub Actions, pipelines multi-stage, deploy EKS automatizado</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-dot"></span>
+        <span>SRE Dashboard</span>
+      </div>
+      <div class="footer-info">
+        <p>Projeto portfolio desenvolvido por <strong>Marvin Costa</strong></p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank" id="footer-github">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" id="footer-linkedin">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
