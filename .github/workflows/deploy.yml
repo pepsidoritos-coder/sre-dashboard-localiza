@@ -1,10 +1,15 @@
-name: 🚀 CI/CD — SRE Dashboard
+name: 🚀 CI/CD — SRE Dashboard (AWS Deploy)
 
 on:
+  # Roda manualmente pelo GitHub Actions → Run workflow
+  workflow_dispatch:
+  # Roda automaticamente APENAS se o secret AWS estiver configurado
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    paths:
+      - 'app/**'
+      - 'k8s/**'
+      - 'terraform/**'
 
 env:
   AWS_REGION: us-east-1
