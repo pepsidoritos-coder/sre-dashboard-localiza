@@ -1,8 +1,8 @@
-# SRE Cloud Dashboard — Localiza&Co
+# SRE Cloud Dashboard — [Acesse aqui](https://marvincoast.github.io/sre-dashboard-localiza/)
 
 > Projeto portfolio desenvolvido por **Marvin Costa**  **SRE/Cloud Engineer**.
 
-## 🏗️ Arquitetura
+## 🏗️ Arquitetura - 
 
 ```
 Internet → Akamai CDN/WAF → AWS ALB → EKS (Karpenter) → Pods Nginx
