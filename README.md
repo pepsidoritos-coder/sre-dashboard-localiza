@@ -1,6 +1,6 @@
 # SRE Cloud Dashboard — Localiza&Co
 
-> Projeto portfolio desenvolvido por **Marvin Costa** para a vaga de **SRE/Cloud Engineer** na **Localiza&Co**.
+> Projeto portfolio desenvolvido por **Marvin Costa**  **SRE/Cloud Engineer**.
 
 ## 🏗️ Arquitetura
 
