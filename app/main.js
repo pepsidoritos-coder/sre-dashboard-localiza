@@ -46,7 +46,7 @@ const randInt = (min, max) => Math.floor(rand(min, max + 1));
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
           const alpha = 1 - dist / 110;
-          ctx.strokeStyle = `rgba(59,130,246,${alpha * 0.25})`;
+          ctx.strokeStyle = `rgba(0,132,61,${alpha * 0.28})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -58,7 +58,7 @@ const randInt = (min, max) => Math.floor(rand(min, max + 1));
       if (n.x < 0 || n.x > W) n.vx *= -1;
       if (n.y < 0 || n.y > H) n.vy *= -1;
       const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2);
-      grd.addColorStop(0, n.type === 'primary' ? 'rgba(99,179,237,0.9)' : 'rgba(16,185,129,0.7)');
+      grd.addColorStop(0, n.type === 'primary' ? 'rgba(0,168,78,0.9)' : 'rgba(120,200,0,0.7)');
       grd.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
@@ -107,17 +107,17 @@ Sparkline.prototype.draw = function () {
   });
   const gradient = ctx.createLinearGradient(0, 0, W, 0);
   gradient.addColorStop(0, color);
-  gradient.addColorStop(1, '#06b6d4');
+  gradient.addColorStop(1, '#78C800');
   ctx.strokeStyle = gradient;
   ctx.lineWidth = 1.5;
   ctx.lineJoin = 'round';
   ctx.stroke();
 };
 
-const spCpu   = new Sparkline('spark-cpu',   '#3b82f6');
+const spCpu   = new Sparkline('spark-cpu',   '#00843D');
 const spMem   = new Sparkline('spark-mem',   '#f59e0b');
-const spRps   = new Sparkline('spark-rps',   '#3b82f6');
-const spError = new Sparkline('spark-error', '#10b981');
+const spRps   = new Sparkline('spark-rps',   '#00A84E');
+const spError = new Sparkline('spark-error', '#78C800');
 
 /* ============================================================
    3. LIVE METRICS UPDATES
@@ -404,7 +404,7 @@ window.addEventListener('scroll', () => {
   const nav = $('navbar');
   if (!nav) return;
   if (window.scrollY > 40) {
-    nav.style.borderBottomColor = 'rgba(59,130,246,0.15)';
+    nav.style.borderBottomColor = 'rgba(0,90,48,0.3)';
   } else {
     nav.style.borderBottomColor = 'rgba(255,255,255,0.07)';
   }
@@ -425,5 +425,5 @@ setInterval(() => {
   }
 }, 7000);
 
-console.log('%c SRE Dashboard — Marvin Costa ', 'background:#3b82f6;color:white;font-size:14px;font-weight:bold;padding:6px 12px;border-radius:4px;');
-console.log('%c Localiza&Co Candidatura — Cloud/SRE Engineer', 'color:#10b981;font-size:12px;');
+console.log('%c SRE Dashboard — Marvin Costa ', 'background:#005A30;color:white;font-size:14px;font-weight:bold;padding:6px 12px;border-radius:4px;');
+console.log('%c Localiza&Co Candidatura — SRE/Cloud Engineer', 'color:#78C800;font-size:12px;');
